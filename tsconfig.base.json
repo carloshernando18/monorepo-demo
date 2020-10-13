@@ -15,7 +15,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@monorepo-demo/app/ui": ["libs/app/ui/src/index.ts"],
+      "@monorepo-demo/app/material": ["libs/app/material/src/index.ts"],
+      "@monorepo-demo/data-models": ["libs/data-models/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

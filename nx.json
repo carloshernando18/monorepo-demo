@@ -32,6 +32,15 @@
     "app-e2e": {
       "tags": [],
       "implicitDependencies": ["app"]
+    },
+    "app-ui": {
+      "tags": []
+    },
+    "app-material": {
+      "tags": []
+    },
+    "data-models": {
+      "tags": []
     }
   }
 }

@@ -5,7 +5,7 @@ module.exports = {
     'subject-max-length': [2, 'always', 200],
     'subject-min-length': [2, 'always', 10],
     'body-min-length': [2, 'always', 10],
-    'scope-enum': [2, 'always', ['auth', 'config']],
+    'scope-enum': [2, 'always', ['auth', 'profile']],
     'type-enum': [
       2,
       'always',
