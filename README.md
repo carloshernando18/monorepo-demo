@@ -1,90 +1,66 @@
-# MonorepoDemo
+# Ejemplo Utilizando Monorepo
 
-This project was generated using [Nx](https://nx.dev).
+## Creamos el workspace (Espacio de trabajo)
 
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+Para crear el workspace  nx necesitamos ejecutar el siguiente comando
 
-🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
+```
+npx create-nx-workspace@latest
+```
 
-## Adding capabilities to your workspace
+Después de ejecutar el comando anterior, debemos configurar los siguientes parámetros
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+* Definir el nombre de nuestro workspace para nuestro ejemplo: **monorepo-demo**.
+```
+? Workspace name (e.g., org name)       : monorepo-demo
+```
+* Especificar el cómo deseamos crear nuestro workspace para el ejemplo: **empty** (vacío).
+```
+? What to create in the new workspace   : empty
+```
+* Escoger la interfaz de línea de comandos o interfaz de línea de órdenes (command line interface **CLI**) que se va a utilizr para el ejemplo: **Nx**
+```
+? CLI to power the Nx Workspace         : Nx
+```
+* Nos pregunta que si vamos a utilizar **nx Cloud** para el ejemplo: **No**
+```
+? Use Nx Cloud?                         : No
+```
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+## Ahora configuramos: commitlint, conventionalCommits y husky
 
-Below are our core plugins:
+**commitlint** Comprueba si sus comentarios de confirmación del **commit** cumplen con el formato. [commitlint](https://github.com/conventional-changelog/commitlint)
 
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
-
-There are also many [community plugins](https://nx.dev/nx-community) you could add.
-
-## Generate an application
-
-Run `nx g @nrwl/react:app my-app` to generate an application.
-
-> You can use any of the plugins above to generate applications as well.
-
-When using Nx, you can create multiple applications and libraries in the same workspace.
-
-## Generate a library
-
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
-
-> You can also use any of the plugins above to generate libraries as well.
-
-Libraries are sharable across libraries and applications. They can be imported from `@monorepo-demo/mylib`.
-
-## Development server
-
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx dep-graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev) to learn more.
-
-## ☁ Nx Cloud
-
-### Computation Memoization in the Cloud
-
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+**conventionalCommits** Se trata de una especificación para dar significado a los mensajes de los commits haciéndolos legibles para humanos y máquinas. [conventional commits](https://www.conventionalcommits.org/en/)
+* Instalar **commitlint** **conventionalCommits**
+```
+npm install --save-dev @commitlint/config-conventional @commitlint/cli
+```
+* Se crea un archivo en la raíz denominado `commitlint.config.js`. En dicho archivo se dfinen las reglas para commitlint.
+```
+module.exports = {
+  extends: ['@commitlint/config-conventional'],
+  rules: {
+    'subject-empty': [2, 'never'],
+    'subject-max-length': [2, 'always', 200],
+    'subject-min-length': [2, 'always', 10],
+    'body-min-length': [2, 'always', 10],
+    'scope-enum': [2, 'always', ['auth', 'config']],
+    'type-enum': [
+      2,
+      'always',
+      [
+        'build',
+        'ci',
+        'docs',
+        'feat',
+        'fix',
+        'perf',
+        'refactor',
+        'style',
+        'test',
+      ],
+    ],
+  },
+};
+```
