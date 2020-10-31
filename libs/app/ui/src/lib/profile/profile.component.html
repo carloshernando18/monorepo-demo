@@ -12,7 +12,7 @@
         <input
           matInput
           placeholder="Identification"
-          autocomplete="false"
+          autocomplete="off"
           required
           formControlName="identification"
         />
@@ -22,7 +22,7 @@
         <input
           matInput
           placeholder="Name"
-          autocomplete="false"
+          autocomplete="off"
           required
           formControlName="name"
         />
@@ -32,7 +32,7 @@
         <input
           matInput
           placeholder="Phone"
-          autocomplete="false"
+          autocomplete="off"
           required
           formControlName="phone"
         />
@@ -42,20 +42,22 @@
         <input
           matInput
           placeholder="Address"
-          autocomplete="false"
+          autocomplete="off"
           required
           formControlName="address"
         />
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>About you</mat-label>
-        <input
+        <textarea
+          rows="12"
           matInput
           placeholder="About you"
-          autocomplete="false"
+          autocomplete="off"
           required
           formControlName="about"
-        />
+          class="no-resize"
+        ></textarea>
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions align="end">
