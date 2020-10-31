@@ -1,3 +1,9 @@
-<h1>{{ apiMessage$ | async }}</h1>
-<monorepo-demo-profile (submit)="save($event)"></monorepo-demo-profile>
-<router-outlet></router-outlet>
+<mat-toolbar color="primary">
+  <span>Nx Profiles</span>
+  <a mat-button routerLink="directory">Directory</a>
+  <a mat-button routerLink="profile">Profile</a>
+</mat-toolbar>
+<div fxLayout="column" fxLayoutAlign="sepec-around center">
+  <h1>{{ apiMessage$ | async }}</h1>
+  <router-outlet></router-outlet>
+</div>

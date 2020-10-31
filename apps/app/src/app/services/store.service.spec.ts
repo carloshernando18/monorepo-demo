@@ -11,10 +11,13 @@ import { environment } from './../../environments/environment';
 import { StoreService } from './store.service';
 
 const mockAngularFirestore = () => ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   collection: (name: string) => ({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     doc: (id: string) => ({
       valueChanges: () => new BehaviorSubject({ foo: 'bar' }),
-      set: (document: any) => new Promise((resolve, _reject) => resolve()),
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      set: (document: unknown) => new Promise((resolve) => resolve()),
     }),
   }),
   createId: jest.fn(),
