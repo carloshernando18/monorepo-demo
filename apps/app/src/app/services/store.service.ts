@@ -10,11 +10,18 @@ export class StoreService {
 
   save(profile: Profile): Promise<void> {
     if (profile.name) {
-      return this.firestore
-        .collection('profiles')
-        .doc(this.firestore.createId())
-        .set(profile);
+      const id = this.firestore.createId();
+      profile.id = id;
+      return this.firestore.collection('profiles').doc(id).set(profile);
     }
     return new Promise<void>((resolve, reject) => reject('Name required'));
+  }
+
+  update(profile: Profile) {
+    this.firestore.doc(`profiles/${profile.id}`).update(profile);
+  }
+
+  get() {
+    return this.firestore.collection('profiles').valueChanges();
   }
 }

@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Input,
   OnInit,
   Output,
 } from '@angular/core';
@@ -15,7 +16,10 @@ import { Profile } from '@monorepo-demo/data-models';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileComponent implements OnInit {
-  @Output() submit = new EventEmitter<Profile>();
+  @Output() submitProfile = new EventEmitter<Profile>();
+  @Output() onCancel = new EventEmitter<void>();
+  @Input() profile: Profile;
+  @Input() mode: 'create' | 'edit' = 'create';
 
   profileForm = this.formBuilder.group({
     identification: ['', [Validators.required, Validators.minLength(5)]],
@@ -26,15 +30,23 @@ export class ProfileComponent implements OnInit {
     ],
     address: ['', [Validators.required]],
     about: ['', [Validators.required, Validators.minLength(5)]],
+    id: [''],
   });
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) {
+    this.profile = this.profileForm.value;
+  }
 
   ngOnInit(): void {
-    // ..
+    this.profileForm.patchValue(this.profile);
   }
 
   save() {
-    this.submit.emit(this.profileForm.value);
+    this.submitProfile.emit(this.profileForm.value);
+    this.profileForm.reset();
+  }
+
+  cancel() {
+    this.onCancel.emit();
   }
 }

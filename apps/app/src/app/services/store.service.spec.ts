@@ -62,11 +62,10 @@ describe('StoreService', () => {
     }
   });
 
-  it('should sava a new profile', async () => {
-    profile.name = 'Andrés';
+  it('should save a new profile', async () => {
+    profile.name = 'test';
     try {
       const result = await service.save(profile);
-      console.log('jofa barra');
       expect(result).toBeTruthy();
     } catch (error) {
       expect(error).not.toBe('Name required');
