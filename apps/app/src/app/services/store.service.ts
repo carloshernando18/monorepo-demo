@@ -24,4 +24,8 @@ export class StoreService {
   get() {
     return this.firestore.collection('profiles').valueChanges();
   }
+
+  delete(id: string) {
+    this.firestore.doc(`profiles/${id}`).delete();
+  }
 }

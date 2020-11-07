@@ -6,7 +6,7 @@ import {
   AngularFirestoreModule,
 } from '@angular/fire/firestore';
 import { Profile } from '@monorepo-demo/data-models';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { environment } from './../../environments/environment';
 import { StoreService } from './store.service';
 
@@ -21,16 +21,19 @@ const mockAngularFirestore = () => ({
     }),
   }),
   createId: jest.fn(),
+  doc: jest.fn(),
 });
 
 describe('StoreService', () => {
   let service: StoreService;
+  let firestoreService: AngularFirestore;
   const profile: Profile = {
     identification: '',
     name: '',
     phone: 0,
     address: '',
     about: '',
+    id: '',
   };
 
   beforeEach(() => {
@@ -43,11 +46,12 @@ describe('StoreService', () => {
       providers: [
         {
           provide: AngularFirestore,
-          useValue: mockAngularFirestore,
+          useFactory: mockAngularFirestore,
         },
       ],
     });
     service = TestBed.inject(StoreService);
+    firestoreService = TestBed.inject(AngularFirestore);
   });
 
   it('should be created', () => {
@@ -64,11 +68,59 @@ describe('StoreService', () => {
 
   it('should save a new profile', async () => {
     profile.name = 'test';
+    jest.spyOn(firestoreService, 'createId').mockReturnValue('1');
     try {
-      const result = await service.save(profile);
-      expect(result).toBeTruthy();
+      await service.save(profile);
     } catch (error) {
       expect(error).not.toBe('Name required');
     }
+  });
+
+  it('should update the profile', async () => {
+    const mockAngularFirestoreDocument = {
+      update: jest.fn(),
+    };
+    const docSpy = jest
+      .spyOn(firestoreService, 'doc')
+      .mockReturnValue(mockAngularFirestoreDocument as never);
+    const updateSpy = jest.spyOn(mockAngularFirestoreDocument, 'update');
+
+    profile.id = '1';
+    service.update(profile);
+
+    expect(docSpy).toHaveBeenCalled();
+    expect(docSpy).toHaveBeenCalledWith('profiles/1');
+
+    expect(updateSpy).toHaveBeenCalled();
+    expect(updateSpy).toHaveBeenCalledWith(profile);
+  });
+
+  it('should delete the profile', async () => {
+    const mockAngularFirestoreDocument = {
+      delete: jest.fn(),
+    };
+    const docSpy = jest
+      .spyOn(firestoreService, 'doc')
+      .mockReturnValue(mockAngularFirestoreDocument as never);
+
+    service.delete('1');
+
+    expect(docSpy).toHaveBeenCalled();
+    expect(docSpy).toHaveBeenCalledWith('profiles/1');
+  });
+
+  it('should return the stored data', () => {
+    const mockAngularFirestoreCollection = {
+      valueChanges: jest.fn(),
+    };
+    jest
+      .spyOn(firestoreService, 'collection')
+      .mockReturnValue(mockAngularFirestoreCollection as never);
+    const valueChangesSpy = jest
+      .spyOn(mockAngularFirestoreCollection, 'valueChanges')
+      .mockReturnValue(of([]));
+    const result = service.get();
+    expect(valueChangesSpy).toHaveBeenCalled();
+    expect(result).toBeInstanceOf(Observable);
   });
 });
