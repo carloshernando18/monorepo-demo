@@ -9,6 +9,8 @@
     "test": "nx test",
     "test:api": "nx test api --codeCoverage=true --coverage",
     "test:app": "nx test app --codeCoverage=true --coverage",
+    "test:app-ui": "nx test app-ui --codeCoverage=true --coverage",
+    "test:all": "npm run test:app && npm run test:api && npm run test:app-ui",
     "lint": "nx workspace-lint && nx lint",
     "e2e": "nx e2e",
     "affected:apps": "nx affected:apps",
