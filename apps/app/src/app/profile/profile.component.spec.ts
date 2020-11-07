@@ -1,3 +1,5 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AngularFireModule } from '@angular/fire';
@@ -5,6 +7,8 @@ import { Profile } from '@monorepo-demo/data-models';
 import { environment } from '../../environments/environment';
 import { StoreService } from '../services/store.service';
 import { ProfileComponent } from './profile.component';
+import { AppUiModule } from '@monorepo-demo/app/ui';
+import { AppMaterialModule } from '@monorepo-demo/app/material';
 
 let storeService: StoreService;
 
@@ -18,6 +22,7 @@ const profile: Profile = {
   phone: 0,
   address: '',
   about: '',
+  id: '',
 };
 
 describe('ProfileComponent', () => {
@@ -27,8 +32,11 @@ describe('ProfileComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        AppUiModule,
+        AppMaterialModule,
         AngularFireModule.initializeApp(environment.firebaseConfig),
-        AngularFireModule,
+        AngularFirestoreModule,
+        BrowserAnimationsModule,
       ],
       declarations: [ProfileComponent],
       providers: [

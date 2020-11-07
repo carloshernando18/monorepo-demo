@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit {
     identification: ['', [Validators.required, Validators.minLength(5)]],
     name: ['', [Validators.required]],
     phone: [
-      '',
+      null,
       [Validators.required, Validators.minLength(10), Validators.maxLength(10)],
     ],
     address: ['', [Validators.required]],

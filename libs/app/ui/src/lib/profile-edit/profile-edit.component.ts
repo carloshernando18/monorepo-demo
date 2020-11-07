@@ -13,10 +13,6 @@ export class ProfileEditComponent {
     @Inject(MAT_DIALOG_DATA) public profile: Profile
   ) {}
 
-  ngOnInit(): void {
-    //..
-  }
-
   edit(profile: Profile) {
     this.dialogRef.close(profile);
   }
